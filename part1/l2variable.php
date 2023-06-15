@@ -1,6 +1,10 @@
 <?php
   
   // Variables 
+  // variable scope 
+  // (i)Global Variable Scope 
+  // (ii)Local Variable Scope
+  // (iii)Static Variable Scope
 
   $fullname = 'U Kyaw Kyaw';
   $job = 'Developer';
