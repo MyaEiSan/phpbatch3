@@ -71,5 +71,12 @@ echo $_SERVER["SCRIPT_FILENAME"]; //C:/xampp/htdocs/phpbatch3/part1/l12superglob
 
 echo "<hr/>";
 
+// http://localhost/phpbatch3/part1/l12superglobalariables.php?aungaung
+echo $_SERVER['QUERY_STRING']; //aungaung
+
+echo "<hr/>";
+
+
+//------------------------------------
 
 ?>

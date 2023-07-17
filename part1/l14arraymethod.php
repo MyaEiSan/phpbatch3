@@ -102,7 +102,7 @@ echo "<pre>".print_r(array_intersect($num2,$num1),"true")."</pre>"; //10 20 30 8
 $col1 = array("a"=>"red","b"=>"green","c"=>"blue","d"=>"yellow");
 $col2 = array("a"=>"red","f"=>"green","d"=>"orange");
 
-echo "<pre>".print_r(array_intersect($col1,$col1),"true")."</pre>"; //red green
+echo "<pre>".print_r(array_intersect($col1,$col2),"true")."</pre>"; //red green
 echo "<pre>".print_r(array_intersect($col2,$col1),"true")."</pre>";//red green 
 
 echo "<hr/>";

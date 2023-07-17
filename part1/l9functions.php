@@ -62,7 +62,7 @@
     // --------------
 
     function multifun($name,$age){
-        echo "My name is {$name} and i am ${$age} years old.";
+        echo "My name is {$name} and i am {$age} years old.";
     }
 
     multifun("Aung Aung",20);
