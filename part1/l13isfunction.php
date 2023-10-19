@@ -129,7 +129,22 @@ if(isset($val)){
 
 echo "<hr/>";
 
+//$city;
+$city = "Yangon";
+$country = "Thailand";
+echo isset($city) ? "Yes" : "No";
+echo "<br/>";
+echo "$city <br/>"; //Yangon
+echo "$country <br/>"; //Thailand
 
+// unset($city);
+// unset($country);
+
+// unset($city,$country);
+echo "$city <br/>";
+echo "$country <br/>";
+
+echo "<hr/>";
 
 
 // gettype(variable) Function

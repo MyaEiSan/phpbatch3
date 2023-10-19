@@ -513,4 +513,25 @@ echo "<pre>".print_r(sizeof($colors),"true")."</pre>";  //4 by string (int)
 echo var_dump(sizeof($colors));
 
 echo "<hr/>";
+
+// => serialize() vs unserialize()
+
+$staffs = [
+    ["aung aung","maung maung","kyaw kyaw","tun tun","thura"],
+    ["su su","yu yu","nu nu","aye aye","hla hla"]
+];
+
+echo "<pre>".print_r($staffs,true)."</pre>";
+
+$seridatas = serialize($staffs);
+echo $seridatas;
+echo "<br/>";
+var_dump($seridatas);
+echo "<br/>";
+$unseridatas = unserialize($seridatas);
+echo "<pre>".print_r($unseridatas,true)."</pre>";
+
+echo "<hr/>";
+
+
 ?>
