@@ -8,7 +8,7 @@
 
 // (i) MySQLi Procedural 
                     //   hostname username password databasename
-$conn = mysqli_connect("localhost","root","","wdf6839");
+$conn = mysqli_connect("localhost","root","","phpdbfour");
 
 if(mysqli_connect_error()){
     echo "Failed to connect :".mysqli_connect_error();
@@ -59,7 +59,7 @@ echo "<hr/>";
 
 
 
-$conn = new mysqli("localhost","root","","wdf6839");
+$conn = new mysqli("localhost","root","","phpdbfour");
 
 if($conn->connect_errno){
     echo "Failed to connect :". $conn->connect_errno;
@@ -103,13 +103,14 @@ echo "<hr/>";
 $dbhost = "localhost";
 $dbuser = "root";
 $dbpass = "";
-$dbname = "wdf6839";
+$dbname = "phpdbfour";
 
 try{
-    $conn = new PDO("mysql:host=$dbhost",$dbuser,$dbpass);
-    // $conn = new PDO("mysqli:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    // $conn = new PDO("mysql:host=$dbhost",$dbuser,$dbpass);
+    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
     $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    echo "Connect Successfully";
+    var_dump($conn);
+    echo "Connect Successfullykjk";
 }catch(PDOException $e){
     echo "Connection Failed : ". $e->getMessage();
 }

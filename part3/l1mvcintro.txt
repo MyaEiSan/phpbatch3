@@ -1,0 +1,35 @@
+=>MVC Framework (Model, View, Controller)
+
+=Model 
+it's work with database (Select,Insert,Update,Delete)
+communicate with the controller (when )
+
+=View 
+A view is that part of the application that represents the presentation of data HTML CSS codes for 
+
+=Controller
+the controller receives input from the user, process the request(GET,POST,PUT,DELETE)
+The controller mediates between the models an dviews.
+
+- - - - - - - - - - - - - - - - - - -
+
+=>Routing 
+
+https://dlt.com/
+https://dlt.com/roles/index.php 
+https://dlt.com/roles/1/edit.php 
+https://dlt.com/roles/show/1.php 
+
+
+Base URL = https://dlt.com/
+Absolute URL = https://dlt.com/roles/index.php 
+Relative URL 
+        (i) Prefix URL            = /roles/
+        (ii) Entry-Specific URL   = /show.1.php
+
+
+        =roles/show/1.php 
+         roles defines as class 
+         show defines as method 
+         1 defined as parameter 
+
