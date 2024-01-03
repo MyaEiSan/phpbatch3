@@ -33,3 +33,17 @@ Relative URL
          show defines as method 
          1 defined as parameter 
 
+
+         .htaccess file ထဲက Options +Indexes ဆိုရင် app directory ကို browser ကနေ access ရနေမှာ  
+         .htaccess file ကို app ထဲမှာ ရေးထားလို့ app မှာပဲ effect ရှိမှာ 
+         .htaccess က apache file 
+         #က apache မှာ comment ပိတ်တာ 
+         Options -Indexes ဆိုရင် app directory ကို browser ကနေ access မရတော့ဘူး forbidden ဖြစ်နေမယ် ဒါပေမယ့် file အတိအကျ သိရင်တော့ access လုပ်လို့ရနေမယ် 
+         Options +Indexes ဆိုရင် access ရမယ် 
+
+         apache code တွေက case sensitive ဖြစ်တယ် 
+
+         RewriteCond %{REQUEST_FILENAME} !-d // d mean directory part3 ထဲမှာ အခု ရောက်နေတဲ့ directory ရှိရင် အဲဒီ directory ကို ပြမယ် မဟုတ်ရင် အောက်က index.php ကိုသွားမယ်   
+         RewriteCond %{REQUEST_FILENAME} !-f // f mean file  part3 ထဲမှာ အခု ရောက်နေတဲ့ file ရှိရင် အဲဒီ file ကို ပြမယ် မဟုတ်ရင် အောက်က index.php ကိုသွားမယ်
+
+

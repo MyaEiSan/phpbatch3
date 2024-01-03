@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    #RewriteBase /phpbatch3/part3
+    RewriteBase /phpbatch3/part3/public/
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+</IfModule>
+
+
+#QSA (append query string from request to substituted URL)
+#L (last - stop processing rules) L က switch တွေမှာလို break နဲ့တူ တယ် L ပါတဲ့ code rule ကို run ပြီးရင် အောက်က code #တွေ rule တွေကို ဆက်မလုပ်စေချင်တာ 
