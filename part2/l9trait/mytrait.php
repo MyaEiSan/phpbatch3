@@ -27,7 +27,7 @@ trait devlogin{
 class googleauth{
 
   // Method 3
-  // use sitelogin, devlogin; 
+  use sitelogin, devlogin; 
 
   public function gmaillogin(){
     echo "This is Gmail login . Email is $this->email & Profile name is $this->fullname. <br/>";

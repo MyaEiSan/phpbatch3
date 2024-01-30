@@ -46,7 +46,7 @@
             $result = preg_match("/[a-z]/",$string); //it's true
             $result = preg_match("/[A-Z]/",$string); //it's false 
             $result = preg_match("/[A-Z] | [a-z]/",$string); //it's true
-            $result = preg_match("/^[a-z]/",$string); //it's true
+            $result = preg_match("/^[a-z]/",$string); //it's trueytg
             $result = preg_match("/[a-z]$/",$string); //it's false 
             $result = preg_match("/^[5-9]/",$string); //it's false 
             $result = preg_match("/[5-9]$/",$string); //it's true 

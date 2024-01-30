@@ -2,7 +2,7 @@
 
 echo "I am main index";
 echo "<br/>";
-echo $_SERVER['QUERY_STRING'];
+// echo $_SERVER['QUERY_STRING'];
 
 
 

@@ -2,3 +2,5 @@
 
 Options -Indexes
 
+# Note Options +Indexes က default app အောက်က folder structure တွေ မြင်နေရမှာ 
+# Note Options -Indexes က အောက်က folder structure တွေကို မမြင်ရအောင် access မရအောင် လုပ်တာ 
