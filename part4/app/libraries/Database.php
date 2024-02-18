@@ -43,7 +43,7 @@ class Database{
         $this->stmt = $this->conn->prepare($query);
     }
 
-    public function dbbine($param,$value,$type=null){
+    public function dbbind($param,$value,$type=null){
         if(is_null($type)){
             switch(true){
                 case is_string($value):
