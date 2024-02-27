@@ -24,8 +24,17 @@
 		    	       <li class="nav-item"><a href="<?php echo URLROOT; ?>/public/mainpage/customer" class="nav-link mx-2 menuitems">Customer</a></li>
 		    	       <li class="nav-item"><a href="<?php echo URLROOT; ?>/public/mainpage/furniture" class="nav-link mx-2 menuitems">Furniture</a></li>
 		    	       <li class="nav-item"><a href="<?php echo URLROOT; ?>/public/mainpage/contact" class="nav-link mx-2 menuitems">Contact</a></li>
-					   <li class="nav-item"><a href="<?php echo URLROOT; ?>/public/users/login" class="nav-link mx-2 menuitems">Login</a></li>
-					   <li class="nav-item"><a href="<?php echo URLROOT; ?>/public/users/register" class="nav-link mx-2 menuitems">Register</a></li>
+					   <?php 
+					   if(isset($_SESSION['user_id'])):
+						?>
+							<li class="nav-item"><a href="<?php echo URLROOT; ?>/public/users/logout" class="nav-link mx-2 menuitems">Logout</a></li>
+						
+					  <?php else : ?>
+							<li class="nav-item"><a href="<?php echo URLROOT; ?>/public/users/login" class="nav-link mx-2 menuitems">Login</a></li>
+							<li class="nav-item"><a href="<?php echo URLROOT; ?>/public/users/register" class="nav-link mx-2 menuitems">Register</a></li>
+					   <?php endif ?>
+					   
+					   
 		        </ul>
 		        </div>
 		    </nav>

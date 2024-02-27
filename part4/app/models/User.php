@@ -33,6 +33,27 @@ class User{
             return false;
         }
     }
+
+    public function login($email,$password){
+
+        $this->db->dbquery("SELECT * FROM users WHERE email=:email");
+
+        $this->db->dbbind(":email",$email);
+
+        $row = $this->db->getsingledata();
+
+        // echo "<pre>".print_r($row,true)."</pre>";
+
+        // echo $row->password; //error , cuz using fetch(PDO::FETCH_ASSOC)
+        // echo $row['password']; //cuz using fetch(PDO::FETCH_ASSOC)
+
+        $hasedpassword = $row['password'];
+        if(password_verify($password,$hasedpassword)){
+            return $row;
+        }else{
+            return false;
+        }
+    }
 }
 
 ?>

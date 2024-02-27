@@ -6,20 +6,23 @@
             <div class="col-md-12">
                 <div class="card bg-light rounded-0">
                     <div class="card-body">
+                        <?php flash('register_success'); ?>
                         <h3>Login Form</h3>
                         <form action="<?php echo URLROOT; ?>/public/users/login" method="POST">
 
                             <div class="form-group mb-3">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" id="email" class="form-control form-control-sm rounded-0 <?php echo (!empty($data['emailerr']))? 'is-invalid': '';  ?>"/>
+                                <input type="email" name="email" id="email"  value="<?= $data['email'] ?>" class="form-control form-control-sm rounded-0 <?php echo (!empty($data['emailerr']))? 'is-invalid': '';  ?>"/>
                                 <span class="invalid-feedback"><?php echo $data['emailerr']; ?></span>
                             </div>
 
                             <div class="form-group mb-3">
                                 <label for="password">Password</label>
-                                <input type="password" name="password" id="password" class="form-control form-control-sm rounded-0 <?php echo (!empty($data['passworderr']))? 'is-invalid': '';  ?>"/>
+                                <input type="password" name="password" id="password" value="<?= $data['password'] ?>" class="form-control form-control-sm rounded-0 <?php echo (!empty($data['passworderr']))? 'is-invalid': '';  ?>"/>
                                 <span class="invalid-feedback"><?php echo $data['passworderr']; ?></span>
                             </div>
+
+                            
 
                             <div class="row">
                                 <div class="col">

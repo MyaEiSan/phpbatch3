@@ -13,8 +13,6 @@ class Users extends Controller{
 
     public function register(){
 
-        $data = [];
-
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
             $_POST = filter_input_array(INPUT_POST,FILTER_SANITIZE_STRING);
@@ -67,8 +65,11 @@ class Users extends Controller{
 
                 if($this->usermodel->register($data)){
 
-                    $redirecturl = URLROOT."/public/users/login";
-                    header('location:'.$redirecturl);
+                    // $redirecturl = URLROOT."/public/users/login";
+                    // header('location:'.$redirecturl);
+
+                    flash("register_success","You are registered successfully.");
+                    redirect('/public/users/login');
                 }else{
                     die('Something Wrong');
                 }
@@ -91,12 +92,11 @@ class Users extends Controller{
                 "passworderr" => "",
                 "confirmpassworderr" => ""
             ];
+             // echo $_POST['confirmpassword'];
+            $this->view('users/register',$data);
 
 
         }
-
-        // echo $_POST['confirmpassword'];
-        $this->view('users/register',$data);
        
     }
 
@@ -108,26 +108,89 @@ class Users extends Controller{
 
             $data = [
                 "email" => trim($_POST['email']),
-                "password" => trim($_POST['password'])
+                "password" => trim($_POST['password']),
+                "emailerr" => "",
+                "passworderr" => ""
             ];
 
-          
-
+            // validate email 
             if(empty($data['email'])){
                 $data["emailerr"] = "Please enter email";
+            }else{
+                if($this->usermodel->registeremailcheck($data['email'])){
+                    //user found
+                }else{
+                    $data['emailerr'] = "No user found";
+                }
             }
+            
 
+            // validate password 
             if(empty($data['password'])){
                 $data["passworderr"] = "Please enter password";
             }
 
-            $this->view('users/login',$data);
+            if(empty($data['emailerr']) && empty($data['passworderr'])){
+                //Validated
+
+                // die('success');
+
+                $loginuser = $this->usermodel->login($data['email'],$data['password']);
+
+                if($loginuser){
+                    // die('Successfull login');
+                    $this->createusersession($loginuser);
+                }else{
+                    $data['passworderr'] = 'Password incorrect';
+                    $this->view('users/login',$data);
+                }
+
+            }else{
+                // Error 
+                $this->view('users/login',$data);
+            }
+
+            
 
         }else{
 
-        }
+            $data = [
+                "email" => "",
+                "password" => "",
+                "emailerr" => "",
+                "passworderr" => ""
+            ];
+            $this->view('users/login',$data);
 
-        $this->view('users/login');
+
+        }
+    }
+
+    public function createusersession($user){
+
+        // echo $user->id; //err, cuz fetch(PDO::FETCH_ASSOC) in Database file 
+        // echo $user['id'];
+
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_email'] = $user['email'];
+
+        // $redirecturl = URLROOT.'/public/mainpage/index';
+        // header('location:'.$redirecturl);
+
+        redirect('/public/mainpage/index');
+
+
+    }
+
+    public function logout(){
+
+        unset($_SESSION['user_id']);
+        unset($_SESSION['user_name']);
+        unset($_SESSION['user_email']);
+        session_destroy();
+
+        redirect('/public/users/login');
     }
 }
 
