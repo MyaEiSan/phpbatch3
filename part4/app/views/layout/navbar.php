@@ -27,7 +27,15 @@
 					   <?php 
 					   if(isset($_SESSION['user_id'])):
 						?>
-							<li class="nav-item"><a href="<?php echo URLROOT; ?>/public/users/logout" class="nav-link mx-2 menuitems">Logout</a></li>
+							<li class="nav-item dropdown">
+								<a href="javascript:void(0);" class="nav-link mx-2 dropdown-toggle menuitems" data-bs-toggle="dropdown"><?php echo $_SESSION['user_name'] ?></a>
+
+								<ul class="dropdown-menu">
+									<li>
+										<a href="<?php echo URLROOT; ?>/public/users/logout" class="dropdown-item">Logout</a>
+									</li>
+								</ul>
+							</li>
 						
 					  <?php else : ?>
 							<li class="nav-item"><a href="<?php echo URLROOT; ?>/public/users/login" class="nav-link mx-2 menuitems">Login</a></li>

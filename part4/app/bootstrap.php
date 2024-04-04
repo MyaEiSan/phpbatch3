@@ -9,7 +9,8 @@ require_once 'helpers/redirect.php';
 // Load Flashmessage 
 require_once 'helpers/flashmessage.php';
 
-
+// Load Sessionbox 
+require_once "helpers/sessionbox.php";
 
 // Load Libraries 
 // require_once "libraries/Controller.php";

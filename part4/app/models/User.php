@@ -54,6 +54,15 @@ class User{
             return false;
         }
     }
+
+    public function getuserbyid($id){
+        $this->db->dbquery("SELECT * FROM users WHERE id = :id");
+        $this->db->dbbind(":id",$id);
+
+        $row = $this->db->getsingledata();
+
+        return $row; 
+    }
 }
 
 ?>
