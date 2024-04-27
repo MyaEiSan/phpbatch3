@@ -41,14 +41,20 @@ class Posts extends Controller{
 
 
             $data = [
+                'image' =>  $_FILES['image']['name'],
                 'title' => trim($_POST['title']),
                 'content' => trim($_POST['content']),
                 'user_id' => $_SESSION['user_id'],
+                'imageerr' => '',
                 'titleerr' => '',
                 'contenterr' => ''
             ];
 
             // validate data 
+            if(empty($data['image'])){
+                $data['imageerr'] = 'Please insert image';
+            }
+
             if(empty($data['title'])){
                 $data['titleerr'] = 'Please enter title';
             }
@@ -59,11 +65,25 @@ class Posts extends Controller{
 
             // no errors 
 
-            if(empty($data['titleerr']) && empty($data['contenterr'])){
-                // validated 
+            if(empty($data['imageerr']) && empty($data['titleerr']) && empty($data['contenterr'])){
+                // validated
+                
+                $getroot =  dirname(dirname(dirname(__FILE__)));
+                $uploaddir = $getroot."/public/assets/image/";
+                $newfilename = $data['user_id'].time().basename($_FILES['image']['name']); 
+                $uploadfile = $uploaddir.$newfilename;
+
+                if(move_uploaded_file($_FILES['image']['tmp_name'],$uploadfile)){
+                    // echo "Uploaded Successfully";
+                    $data['image'] = $newfilename;
+                }else{
+                    echo "Uploading Failed";
+                }
 
                 if($this->postmodel->createpost($data)){
                     flash('post_success','New Post Created');
+
+                    // echo "<pre>".print_r($data,true)."</pre>";
                     redirect('/public/posts');
                 }else{
                     die('Error Found');
@@ -79,6 +99,7 @@ class Posts extends Controller{
 
         }else{
             $data = [
+                'image' => '',
                 'title' => '',
                 'content' => ''
             ];
@@ -112,9 +133,11 @@ class Posts extends Controller{
 
             $data = [
                 'id'=>$id,
+                'image'=> $_POST['old_image'],
                 'title' => trim($_POST['title']),
                 'content' => trim($_POST['content']),
                 'user_id' => $_SESSION['user_id'],
+                'imageerr' => '',
                 'titleerr' => '',
                 'contenterr' => ''
             ];
@@ -132,6 +155,33 @@ class Posts extends Controller{
 
             if(empty($data['titleerr']) && empty($data['contenterr'])){
                 // validated 
+                if(!empty($_FILES['image']['name'])){
+
+                    $getroot =  dirname(dirname(dirname(__FILE__)));
+                    $uploaddir = $getroot."/public/assets/image/";
+                    $newfilename = $data['user_id'].time().basename($_FILES['image']['name']); 
+                    $uploadfile = $uploaddir.$newfilename;
+
+                    // remove old image 
+                    $getoldimage = $uploaddir.$data["image"];
+
+                    if(file_exists($getoldimage)){
+                        unlink($getoldimage);
+                    }
+
+                    // replace new image 
+    
+                    if(move_uploaded_file($_FILES['image']['tmp_name'],$uploadfile)){
+                        // echo "Uploaded Successfully";
+                        $data['image'] = $newfilename;
+                    }else{
+                        echo "Uploading Failed";
+                    }
+                }else{
+                    $data['image'] = $_POST['old_image'];
+                }
+
+               
 
                 if($this->postmodel->updatepost($data)){
                     flash('post_success','Post Updated');
@@ -160,6 +210,7 @@ class Posts extends Controller{
 
             $data = [
                 'id' => $id,
+                'image' => $post['image'],
                 'title' => $post['title'],
                 'content' => $post['content']
             ];
@@ -178,8 +229,17 @@ class Posts extends Controller{
                 redirect('posts');
             }
 
+            // remove old image 
+            $getroot =  dirname(dirname(dirname(__FILE__)));
+            $uploaddir = $getroot."/public/assets/image/";
+            $getoldimage = $uploaddir.$post["image"];
+
+            if(file_exists($getoldimage)){
+                unlink($getoldimage);
+            }
+
             if($this->postmodel->deletePost($id)){
-                flash('post_success','Post Delete');
+                flash('post_success','Post Deleted');
                 redirect('public/posts');
             }else{
                 die('Error Found!');

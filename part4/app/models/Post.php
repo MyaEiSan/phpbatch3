@@ -32,8 +32,9 @@ class Post{
     }
 
     public function createpost($data){
-        $this->db->dbquery("INSERT INTO posts(title,content,user_id) VALUE(:title,:content,:user_id)");
-
+        $this->db->dbquery("INSERT INTO posts(image,title,content,user_id) VALUE(:image,:title,:content,:user_id)");
+        
+        $this->db->dbbind(':image',$data['image']);
         $this->db->dbbind(':title',$data['title']);
         $this->db->dbbind(':content',$data['content']);
         $this->db->dbbind(':user_id',$data['user_id']);
@@ -55,9 +56,10 @@ class Post{
     }
 
     public function updatepost($data){
-        $this->db->dbquery("UPDATE posts SET title=:title,content=:content WHERE id=:id");
+        $this->db->dbquery("UPDATE posts SET image=:image, title=:title,content=:content WHERE id=:id");
 
         $this->db->dbbind(':id',$data['id']);
+        $this->db->dbbind(':image',$data['image']);
         $this->db->dbbind(':title',$data['title']);
         $this->db->dbbind(':content',$data['content']);
 
@@ -83,4 +85,7 @@ class Post{
 }
 
 ?>
+
+<!-- ALTER TABLE posts 
+ADD COLUMN image VARCHAR(255) DEFAULT NULL AFTER id; -->
 

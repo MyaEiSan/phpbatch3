@@ -362,7 +362,7 @@
 				<div class="col-lg-5">
 					<h5 class="display-4 text-white mb-3">Get New Letter</h5>
 
-					<form class="" action="" method="">
+					<form class="" action="<?php echo URLROOT; ?>/public/subscribes/create" method="POST">
 						<div class="form-group py-4">
 							<input type="text" name="name" id="name" class="form-control p-3 inputs" placeholder="Enter Your Name" autocomplete="off" />
 							<label for="name" class="labels">Name</label>
@@ -374,8 +374,8 @@
 						</div>
 						<div class="my-4">
 							<div class="form-check form-switch">
-								<input type="checkbox" name="accept" id="accept" class="form-check-input" />
-								<label for="accept" class="text-light">I agree to get push notify</label>
+								<input type="checkbox" name="status_id" id="status_id" class="form-check-input" value="1" />
+								<label for="status_id" class="text-light">I agree to get push notify</label>
 							</div>
 						</div>
 

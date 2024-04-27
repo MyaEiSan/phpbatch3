@@ -7,10 +7,16 @@
                 <div class="card bg-light rounded-0">
                     <div class="card-body">
                         <h3>Create New Post</h3>
-                        <form action="<?php echo URLROOT; ?>/public/posts/create" method="POST">
+                        <form action="<?php echo URLROOT; ?>/public/posts/create" method="POST" enctype="multipart/form-data">
 
                             <div class="form-group mb-3">
-                                <label for="fullname">Full Name</label>
+                                <label for="image">Image</label>
+                                <input type="file" name="image" id="image" value="<?= $data['image'] ?>" class="form-control form-control-sm rounded-0 <?php echo (!empty($data['imageerr']))? 'is-invalid': '';  ?>" value=""/>
+                                <span class="invalid-feedback"><?php echo $data['imageerr']; ?></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="title">Title</label>
                                 <input type="text" name="title" id="title" value="<?= $data['title'] ?>" class="form-control form-control-sm rounded-0 <?php echo (!empty($data['titleerr']))? 'is-invalid': '';  ?>" value=""/>
                                 <span class="invalid-feedback"><?php echo $data['titleerr']; ?></span>
                             </div>

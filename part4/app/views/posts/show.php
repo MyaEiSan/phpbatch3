@@ -11,6 +11,7 @@
                     <div class="card-body">
                         <!-- <h3 class="card-title"><?php echo $data['post']->title ?></h3> -->
                         <h3 class="card-title"><?php echo $data['post']['title'] ?></h3>
+                        <img src="<?php echo URLROOT.'/public/assets/image/'. $data['post']['image']; ?>" class="img-thumbnail"/>
                         <p>post by : <span class="fw-bold"><?php echo $data['user']['name']; ?></span></p>
                         <p>post date : <span class="fw-bold"><?php echo $data['post']['created_at']; ?></span></p>
                         <hr/>

@@ -21,7 +21,21 @@
                     <p class="small">post date <?php echo $post->publicdate ?></span></p>
                 </div>
                 <div class="card-footer">
-                    <a href="<?php echo URLROOT; ?>/public/posts/show/<?php echo $post->postid ?>" class="btn btn-success btn-sm rounded-0 float-end">Show</a>
+                    <div class="d-flex float-end">
+                        <?php if($post->user_id === $_SESSION['user_id']) : ?>
+                        <div>
+                            <form action="<?php echo URLROOT; ?>/public/posts/destroy/<?php echo $post->postid; ?>" method="POST">
+                                <input type="submit" class="btn btn-danger btn-sm rounded-0" value="Delete" />
+                            </form>
+                        </div>
+                        <div>
+                            <a href="<?php echo URLROOT; ?>/public/posts/edit/<?php echo $post->postid ?>" class="btn btn-primary btn-sm rounded-0">Edit</a>
+                        </div>
+                        <?php endif; ?>
+                        <div>
+                            <a href="<?php echo URLROOT; ?>/public/posts/show/<?php echo $post->postid ?>" class="btn btn-success btn-sm rounded-0">Show</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         <?php endforeach ?>
