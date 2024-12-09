@@ -6,6 +6,8 @@ class Posts extends Controller{
 
     protected $postmodel;
     protected $usermodel;
+    protected $statusmodel; 
+    protected $categorymodel;
 
     public function __construct()
     {
@@ -19,18 +21,49 @@ class Posts extends Controller{
         }else{
             $this->postmodel = $this->model('Post');
             $this->usermodel = $this->model('User');
+            $this->statusmodel = $this->model('Status');
+            $this->categorymodel = $this->model('Category');
         }
     }
 
     public function index(){
-        $posts = $this->postmodel->allposts();
+
+        // Without Pagination 
+        // $posts = $this->postmodel->allposts();
+        // $categories = $this->categorymodel->allcategories();
+        // $statuses = $this->statusmodel->allstatuses();
+        // $data = [
+        //     'posts' => $posts,
+        //     'categories' => $categories, 
+        //     'statuses' => $statuses
+        // ];
+        // $this->view('posts/index',$data);
+
+
+        // = With Pagination ()
+        $limit = 3; 
+        $page = isset($_GET['page'])? $_GET['page']: 1;
+        $offset = ($page -1) * $limit; 
+
+        $posts = $this->postmodel->getpagination($limit,$offset);
+        $totalpostscount = $this->postmodel->gettotalpost();
+        
+        $totalpages = ceil($totalpostscount/$limit); 
+
         $data = [
-            'posts' => $posts
-        ];
+            'posts' => $posts, 
+            'page' => $page, 
+            'totalpages' => $totalpages
+        ]; 
+
         $this->view('posts/index',$data);
+
     }
 
     public function create(){
+
+        $categories = $this->categorymodel->allcategories();
+        $statuses = $this->statusmodel->allstatuses();
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -42,17 +75,28 @@ class Posts extends Controller{
 
             $data = [
                 'image' =>  $_FILES['image']['name'],
+                'category_id' => $_POST['category_id'],
                 'title' => trim($_POST['title']),
                 'content' => trim($_POST['content']),
                 'user_id' => $_SESSION['user_id'],
+                'status_id' => $_POST['status_id'],
                 'imageerr' => '',
+                'category_iderr' => '',
                 'titleerr' => '',
-                'contenterr' => ''
+                'contenterr' => '',
+                'status_iderr' => '',
+                'categories' => $categories, 
+                'statuses' => $statuses
             ];
 
             // validate data 
             if(empty($data['image'])){
                 $data['imageerr'] = 'Please insert image';
+            }
+
+            
+            if(empty($data['category_id'])){
+                $data['category_iderr'] = 'Please select category';
             }
 
             if(empty($data['title'])){
@@ -63,9 +107,13 @@ class Posts extends Controller{
                 $data['contenterr'] = 'Please enter content';
             }
 
+            if(empty($data['status_id'])){
+                $data['status_iderr'] = 'Please select status';
+            }
+
             // no errors 
 
-            if(empty($data['imageerr']) && empty($data['titleerr']) && empty($data['contenterr'])){
+            if(empty($data['imageerr']) && empty($data['category_iderr']) && empty($data['status_iderr']) && empty($data['titleerr']) && empty($data['contenterr'])){
                 // validated
                 
                 $getroot =  dirname(dirname(dirname(__FILE__)));
@@ -100,8 +148,12 @@ class Posts extends Controller{
         }else{
             $data = [
                 'image' => '',
+                'category_id' => '',
                 'title' => '',
-                'content' => ''
+                'content' => '',
+                'status_id' => '',
+                'categories' => $categories, 
+                'statuses' => $statuses
             ];
 
             $this->view('posts/create', $data);
@@ -111,9 +163,13 @@ class Posts extends Controller{
     public function show($id){
         $post = $this->postmodel->getpostbyid($id);
         $user = $this->usermodel->getuserbyid($post['user_id']);
+        $category = $this->categorymodel->getcategorybyid($post['category_id']);
+        $status = $this->statusmodel->getstatusbyid($post['status_id']);
 
         $data = [
             'post'=>$post, 
+            'category' => $category, 
+            'status' => $status,
             'user' => $user
         ];
 
@@ -122,6 +178,9 @@ class Posts extends Controller{
     }
 
     public function edit($id){
+
+        $categories = $this->categorymodel->allcategories();
+        $statuses = $this->statusmodel->allstatuses();
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -133,16 +192,27 @@ class Posts extends Controller{
 
             $data = [
                 'id'=>$id,
+                'category_id' => $_POST['category_id'],
                 'image'=> $_POST['old_image'],
                 'title' => trim($_POST['title']),
                 'content' => trim($_POST['content']),
                 'user_id' => $_SESSION['user_id'],
+                'status_id' => $_POST['status_id'],
                 'imageerr' => '',
+                'category_iderr' => '',
                 'titleerr' => '',
-                'contenterr' => ''
+                'contenterr' => '',
+                'status_iderr' => '',
+                'categories' => $categories,
+                'statuses' => $statuses
             ];
 
             // validate data 
+            if(empty($data['category_id'])){
+                $data['category_iderr'] = 'Please select category';
+            }
+
+
             if(empty($data['title'])){
                 $data['titleerr'] = 'Please enter title';
             }
@@ -151,9 +221,14 @@ class Posts extends Controller{
                 $data['contenterr'] = 'Please enter content';
             }
 
+            if(empty($data['stattus_id'])){
+                $data['stattus_iderr'] = 'Please select status';
+            }
+
+
             // no errors 
 
-            if(empty($data['titleerr']) && empty($data['contenterr'])){
+            if(empty($data['titleerr']) && empty($data['category_iderr']) && empty($data['status_iderr']) && empty($data['contenterr'])){
                 // validated 
                 if(!empty($_FILES['image']['name'])){
 
@@ -210,9 +285,13 @@ class Posts extends Controller{
 
             $data = [
                 'id' => $id,
+                'category_id' => $post['category_id'],
                 'image' => $post['image'],
                 'title' => $post['title'],
-                'content' => $post['content']
+                'content' => $post['content'],
+                'status_id' => $post['status_id'],
+                'categories' => $categories,
+                'statuses' => $statuses
             ];
 
             $this->view('posts/edit', $data);
@@ -251,3 +330,17 @@ class Posts extends Controller{
 }
 
 ?>
+<!-- 
+
+=>Limit / Offset Pagination Mysql Format
+SELECT * FROM tablename 
+ORDER BY 
+    column name, column name 
+LIMIT 
+    5     -- only return 5 rows  (or) page size 
+OFFSET 
+    5     -- skip the first 5 rows 
+
+=> Formula 
+(pagenumber - 1) * page size  
+-->

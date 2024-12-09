@@ -69,11 +69,18 @@ class Database{
         return $this->stmt->execute();
     }
 
-    // get all results set as array object 
+    // get all results set as object 
     public function getmultidata(){
         $this->dbexecute();
         // return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
         return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+      // get all results set as array object 
+      public function getmultidatabyarray(){
+        $this->dbexecute();
+        // return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // get single result as associate array

@@ -14,6 +14,8 @@
                         <img src="<?php echo URLROOT.'/public/assets/image/'. $data['post']['image']; ?>" class="img-thumbnail"/>
                         <p>post by : <span class="fw-bold"><?php echo $data['user']['name']; ?></span></p>
                         <p>post date : <span class="fw-bold"><?php echo $data['post']['created_at']; ?></span></p>
+                        <p>category : <span class="fw-bold"><?php echo $data['category']['name']; ?></span></p>
+                        <p>status : <span class="fw-bold"><?php echo $data['status']['name']; ?></span></p>
                         <hr/>
                         <p><?php echo $data['post']['content'] ?></p>
                         
